@@ -30,7 +30,7 @@ const getQuery = () => {
 
 /**
  *  Basic select call to influx db
- *  Uses query variable above in Influx.query()
+ *  Uses query variable above in influx.query()
  *  Called in route.get in ../routes/times.js
  *  @param {*} res 
  */
