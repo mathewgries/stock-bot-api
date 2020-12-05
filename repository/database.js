@@ -7,24 +7,6 @@ const Influx = require('influx')
 const config = require('./db-config')
 
 /**
- *  Example set up taken from:
- *  https://github.com/node-influx/node-influx/blob/master/examples/express_response_times/app.js
- *  line 20 at the time of publishing this file
- */
-const host = "localhost"
-const database = "express_response_db"
-const schema = [
-    {
-        measurement: "response_times",
-        fields: {
-            path: Influx.FieldType.STRING,
-            duration: Influx.FieldType.INTEGER,
-        },
-        tags: ["host"],
-    },
-]
-
-/**
  *  imported in ./repository/query and write files
  *  const influx = require('../repository/database')
  */

@@ -17,7 +17,6 @@ const app = express();
  *  array of strings for each endpoint
  */
 app.options([
-    '/times',
     '/chartdata'
 ], cors)
 
@@ -47,14 +46,6 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500)
         .json({ error: { message: err.message } })
 })
-
-/**
- *  Basic HTML page - Test The server is running
- *  http://localhost:3001
- */
-app.get("/", function (req, res) {
-    setTimeout(() => res.end("Hello world!"), Math.random() * 500);
-});
 
 data.getDatabases()
 
