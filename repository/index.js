@@ -1,11 +1,11 @@
 /**
  *  Exports database read/write methods
  */
-const { writeResponseTime } = require('../repository/write')
-const {getDatabases, getResponseTimes } = require('../repository/query')
+const { writeAggData } = require('../repository/write')
+const {getDatabases, getAggData } = require('../repository/query')
 
 module.exports = {
-    writeResponseTime,
-    getResponseTimes,
+    writeAggData,
+    getAggData,
     getDatabases
 }

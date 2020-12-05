@@ -5,6 +5,7 @@
 */
 const express = require("express");
 const cors = require('../server/cors-config')
+const data = require('../repository')
 const routes = require('../routes')
 
 // Initialize the app
@@ -12,10 +13,12 @@ const app = express();
 
 /**
  *  Allow post requests for preflight response
- *  Might take an array of endpoints as first argument,
- *  or state once for each end point - (I don't know yet) 
+ *  First argument can be single string, or an
+ *  array of strings for each endpoint
  */
-app.options('/times', cors)
+app.options([
+    '/chartdata'
+], cors)
 
 /** 
  *  Allow content-type for json
@@ -44,13 +47,7 @@ app.use((err, req, res, next) => {
         .json({ error: { message: err.message } })
 })
 
-/**
- *  Basic HTML page - Test The server is running
- *  http://localhost:3001
- */
-app.get("/", function (req, res) {
-    setTimeout(() => res.end("Hello world!"), Math.random() * 500);
-});
+data.getDatabases()
 
 /**
  *  Start the server
