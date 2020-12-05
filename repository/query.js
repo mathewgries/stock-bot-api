@@ -3,7 +3,7 @@
  */
 const Influx = require('influx')
 const influx = require('../repository/database')
-const os = require("os");
+const config = require('./db-config')
 
 /**
  *  Basic query
@@ -22,8 +22,8 @@ const os = require("os");
  *  No where clause
  *  "limit" is similar to MSSQL "TOP" key word
  */
-const getQuery = () => {
-    return `select * from response_times 
+const getQuery = (measurement) => {
+    return `select * from ${measurement}
             order by time desc
             limit 10`
 }
@@ -34,8 +34,8 @@ const getQuery = () => {
  *  Called in route.get in ../routes/times.js
  *  @param {*} res 
  */
-const getResponseTimes = async (res) => {
-    return await influx.query(getQuery())
+const getAggData = async (measurement) => {
+    return await influx.query(getQuery(measurement))
         .then((result) => {
             return result;
         })
@@ -52,21 +52,22 @@ const getResponseTimes = async (res) => {
  *  Will use schema in ..repository/datbase.js
  *  @param {*} app 
  */
-const getDatabases = (app) => {
+const getDatabases = () => {
     influx
         .getDatabaseNames()
         .then((names) => {
-            if (!names.includes("express_response_db")) {
-                console.log('create database')
-                return influx.createDatabase("express_response_db");
+            if (!names.includes(config.database)) {
+                console.log(`create database: ${config.database}`)
+                console.log(config)
+                return influx.createDatabase(config.database);
             }
         })
         .catch((err) => {
-            console.error(`Error creating Influx database!`);
+            console.error(`Error: could not create ${config.database}!`);
         });
 }
 
 module.exports = {
     getDatabases,
-    getResponseTimes
+    getAggData
 }

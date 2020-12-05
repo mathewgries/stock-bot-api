@@ -3,7 +3,9 @@
  *  app.use('/', array())
  */
 const timesRoute = require('./times')
+const chartdata = require('./chartdata')
 
 module.exports = [
-    timesRoute
+    timesRoute,
+    chartdata
 ]

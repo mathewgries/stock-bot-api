@@ -4,7 +4,7 @@
  *  The object used to make calls to the influx database
  */
 const Influx = require('influx')
-
+const config = require('./db-config')
 
 /**
  *  Example set up taken from:
@@ -28,8 +28,4 @@ const schema = [
  *  imported in ./repository/query and write files
  *  const influx = require('../repository/database')
  */
-module.exports = new Influx.InfluxDB({
-    host,
-    database,
-    schema
-});
+module.exports = new Influx.InfluxDB(config);

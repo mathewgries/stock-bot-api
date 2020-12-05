@@ -1,3 +1,4 @@
+const Influx = require('influx')
 const influx = require('../repository/database')
 
 /**
@@ -6,14 +7,12 @@ const influx = require('../repository/database')
  * no response returned, so we create our own
  * @param {*} req 
  */
-const writeResponseTime = async (req) => {
-    return await influx.writePoints([req.body])
+const writeAggData = async (data) => {
+    return await influx
+        .writePoints(data)
         .then(() => {
             return {
-                response: {
-                    status: "OK",
-                    statusCode: 201
-                }
+                response: { status: "OK", statusCode: 201 }
             }
         })
         .catch((err) => {
@@ -33,5 +32,5 @@ const writeResponseTime = async (req) => {
 // }
 
 module.exports = {
-    writeResponseTime
+    writeAggData
 }
